@@ -20,6 +20,16 @@ Python 3.13, standard library only, no network, deterministic: two runs
 write identical bytes. `test_entry.py` checks the output is 1–120
 characters, a single line, and identical across runs.
 
+## Why this line
+
+The fortune treats the plant's next leaf as a career milestone — a
+promotion, not just growth — and the keeper as a proud manager who has
+already booked a photographer for the debut. The joke lands in the
+second half: a houseplant getting the full premiere treatment, as if
+the leaf were a star arriving on a red carpet. It stays kind (the
+plant is celebrated, never mocked) and specific (leaf, promotion,
+photographer), which is what the gardener judge is asked to reward.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

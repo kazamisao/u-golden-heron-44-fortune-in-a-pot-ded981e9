@@ -60,3 +60,32 @@ def test_no_trailing_newline_inflates_length():
         assert run_program(out).returncode == 0
         text = (out / "entry.txt").read_text(encoding="utf-8")
         assert text == text.strip(), "entry has leading/trailing whitespace"
+
+
+def test_fortune_names_leaf_and_photographer():
+    """The fortune is about the next leaf and its documented debut.
+
+    The joke turns on the leaf arriving like a promotion and the keeper
+    booking a photographer for it, so both halves must be present.
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        assert run_program(out).returncode == 0
+        text = (out / "entry.txt").read_text(encoding="utf-8")
+        assert "leaf" in text, "fortune never mentions the leaf"
+        assert "photographer" in text, "fortune never mentions the photographer"
+        assert "promotion" in text, "fortune never frames the leaf as a promotion"
+
+
+def test_program_uses_stdlib_only():
+    """main.py imports only the standard library (os, pathlib)."""
+    import ast
+
+    tree = ast.parse(MAIN.read_text(encoding="utf-8"))
+    imports = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            imports.update(alias.name.split(".")[0] for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            imports.add(node.module.split(".")[0])
+    assert imports <= {"os", "pathlib"}, f"non-stdlib imports: {imports}"
